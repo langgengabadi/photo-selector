@@ -1,37 +1,22 @@
-const folderId = "13XwzkYwGyHy-e4XJHQqruEYQNbeVMkAz"; // Ganti dengan folder ID Drive client
-const apiKey = "AIzaSyBoBNByeXsZIgIQDNTsEBpVhjEKlUHGhns"; // Ganti API Key Google Drive
-const clientName = "NAMA_CLIENT"; // Bisa dinamis dari URL atau input
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Wedding Gallery</title>
+  <style>
+    body{font-family:Arial;background:#fff;padding:15px}
+    h1{text-align:center}
+    .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+    .gallery img{width:100%;cursor:pointer;border-radius:5px;transition:transform 0.2s}
+    .gallery img:hover{transform:scale(1.05)}
+    #selected{margin-top:20px;font-weight:bold}
+  </style>
+</head>
+<body>
+  <h1>Wedding Gallery</h1>
+  <div id="gallery"></div>
+  <p id="selected">0 Foto Terpilih</p>
 
-const gallery = document.getElementById("gallery");
-const selectedP = document.getElementById("selected");
-let selectedPhotos = [];
-
-// Ambil file dari Drive
-fetch(`https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&fields=files(id,name)&key=${apiKey}`)
-.then(res=>res.json())
-.then(data=>{
-  data.files.forEach(file=>{
-    const img = document.createElement("img");
-    img.src = `https://drive.google.com/uc?id=${file.id}`;
-    img.alt = file.name;
-
-    img.addEventListener("click",()=>{
-      if(selectedPhotos.includes(file.id)){
-        selectedPhotos = selectedPhotos.filter(id=>id!==file.id);
-        img.style.border = "";
-      }else{
-        selectedPhotos.push(file.id);
-        img.style.border = "3px solid green";
-      }
-      selectedP.innerText = `${selectedPhotos.length} Foto Terpilih`;
-
-      // Kirim pilihan ke Firebase
-      fetch(`https://photoselectorapp-default-rtdb.firebaseio.com/clients/${clientName}.json`,{
-        method:"PUT",
-        body: JSON.stringify({selectedPhotos})
-      });
-    });
-
-    gallery.appendChild(img);
-  });
-});
+  <script src="script.js"></script>
+</body>
+</html>
