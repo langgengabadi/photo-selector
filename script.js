@@ -25,7 +25,7 @@ fetch(`https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&fiel
       document.getElementById("selected").innerText = `${selectedPhotos.length} Foto Terpilih`;
 
       // Kirim pilihan ke Firebase
-      fetch(`https://YOUR_FIREBASE_URL/clients/${clientName}.json`, {
+      fetch(`https://https://selectorapp-b96d9-default-rtdb.firebaseio.com/clients/${clientName}.json`, {
         method: "PUT",
         body: JSON.stringify({ selectedPhotos })
       });
@@ -34,3 +34,4 @@ fetch(`https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&fiel
     gallery.appendChild(img);
   });
 });
+
